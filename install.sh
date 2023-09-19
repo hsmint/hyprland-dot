@@ -12,19 +12,6 @@ set -e
 
 printf "$(tput setaf 2) Welcome to the Arch Linux YAY Hyprland installer!\n $(tput sgr0)"
 
-sleep 2
-
-printf "$YELLOW PLEASE BACKUP YOUR FILES BEFORE PROCEEDING!
-This script will overwrite some of your configs and files!"
-
-sleep 2
-
-printf "\n
-$YELLOW  Some commands requires you to enter your password inorder to execute
-If you are worried about entering your password, you can cancel the script now with CTRL Q or CTRL C and review contents of this script. \n"
-
-sleep 3
-
 ### Disable wifi powersave mode ###
 read -n1 -rep 'Would you like to disable wifi powersave? (y,n)' WIFI
 if [[ $WIFI == "Y" || $WIFI == "y" ]]; then
@@ -54,7 +41,6 @@ else
         printf "%s - yay is required for this script, now exiting\n" "$RED"
         exit
     fi
-# update system before proceed
     printf "${YELLOW} System Update to avoid issue\n"
     yay -Syu --noconfirm 2>&1 | tee -a $LOG
 fi
@@ -75,26 +61,93 @@ echo
 
 if [[ $inst =~ ^[Nn]$ ]]; then
     printf "${YELLOW} No packages installed. Goodbye! \n"
-            exit 1
-        fi
+    exit 1
+fi
 
 if [[ $inst =~ ^[Yy]$ ]]; then
     hypr_pkgs="hyprland-git wl-clipboard wf-recorder rofi wlogout swaylock-effects dunst swaybg kitty waybar-hyprland-git"
     font_pkgs="ttf-jetbrains-mono-nerd ttf-icomoon-feather noto-fonts-emoji ttf-font-awesome"
     audio_pkgs="pulseaudio pulseaudio-alsa pamixer playerctl"
-    app_pkgs="nwg-look qt5ct ffmpegthumbs swww btop mousepad"
+    app_pkgs="nwg-look qt5ct ffmpegthumbs btop mousepad python-requests"
     bluetooth_pkgs="bluez bluez-utils"
-    laptops_pkgs="brightnessctl"
+    laptop_pkgs="brightnessctl"
     file_managers_pkgs="thunar lxappearance xfce4-settings xdg-desktop-portal-hyprland"
     theme_pkgs="rofi-emoji dracula-gtk-theme dracula-icons-git nordic-theme papirus-icon-theme starship"
 
-    if ! yay -S --noconfirm $hypr_pkgs $font_pkgs $audio_pkgs $app_pkgs $bluetooth_pkgs $laptops_pkgs $file_managers_pkgs $theme_pkgs 2>&1 | tee -a $LOG; then
-        print_error " Failed to install additional packages - please check the install.log \n"
-        exit 1
-    fi
-    xdg-user-dirs-update
+    read -n1 -rep "${CAT} Would you like to install hyperland packages(Necessary)? (y/n)" hypr
     echo
-    print_success " All necessary packages installed successfully."
+    if [[ $hypr =~ ^[Nn]$ ]]; then
+        if ! yay -S --noconfirm $hypr_pkgs  2>&1 | tee -a $LOG; then
+            print_error " Failed to install additional packages - please check the install.log \n"
+            exit 1
+        fi
+    fi
+
+    read -n1 -rep "${CAT} Would you like to install font packages? (y/n)" fonts
+    echo
+    if [[ $fonts =~ ^[Nn]$ ]]; then
+        if ! yay -S --noconfirm $font_pkgs  2>&1 | tee -a $LOG; then
+            print_error " Failed to install additional packages - please check the install.log \n"
+            exit 1
+        fi
+    fi
+
+    read -n1 -rep "${CAT} Would you like to install audio packages? (y/n)" audio
+    echo
+    if [[ $audio =~ ^[Nn]$ ]]; then
+        if ! yay -S --noconfirm $audio_pkgs  2>&1 | tee -a $LOG; then
+            print_error " Failed to install additional packages - please check the install.log \n"
+            exit 1
+        fi
+    fi
+
+    read -n1 -rep "${CAT} Would you like to install app packages? (y/n)" app
+    echo
+    if [[ $app =~ ^[Nn]$ ]]; then
+        if ! yay -S --noconfirm $app_pkgs  2>&1 | tee -a $LOG; then
+            print_error " Failed to install additional packages - please check the install.log \n"
+            exit 1
+        fi
+    fi
+
+    read -n1 -rep "${CAT} Would you like to install bluetooth packages? (y/n)" bluetooth
+    echo
+    if [[ $bluetooth =~ ^[Nn]$ ]]; then
+        if ! yay -S --noconfirm $bluetooth_pkgs  2>&1 | tee -a $LOG; then
+            print_error " Failed to install additional packages - please check the install.log \n"
+            exit 1
+        fi
+    fi
+
+    read -n1 -rep "${CAT} Would you like to install laptop packages? (y/n)" laptop
+    echo
+    if [[ $laptop =~ ^[Nn]$ ]]; then
+        if ! yay -S --noconfirm $laptop_pkgs  2>&1 | tee -a $LOG; then
+            print_error " Failed to install additional packages - please check the install.log \n"
+            exit 1
+        fi
+    fi
+
+    read -n1 -rep "${CAT} Would you like to install laptop packages? (y/n)" file_manager
+    echo
+    if [[ $file_manager =~ ^[Nn]$ ]]; then
+        if ! yay -S --noconfirm $file_managers_pkgs  2>&1 | tee -a $LOG; then
+            print_error " Failed to install additional packages - please check the install.log \n"
+            exit 1
+        fi
+    fi
+
+    read -n1 -rep "${CAT} Would you like to install theme packages? (y/n)" theme
+    echo
+    if [[ $theme =~ ^[Nn]$ ]]; then
+        if ! yay -S --noconfirm $theme_pkgs  2>&1 | tee -a $LOG; then
+            print_error " Failed to install additional packages - please check the install.log \n"
+            exit 1
+        fi
+    fi
+
+    echo
+    print_success "Package are succussfully installed!"
 else
     echo
     print_error " Packages not installed - please check the install.log"
@@ -102,19 +155,12 @@ else
 fi
 
 # BLUETOOTH
-read -n1 -rep "${CAT} OPTIONAL - Would you like to install Bluetooth packages? (y/n)" BLUETOOTH
+read -n1 -rep "${CAT} OPTIONAL - Would you like to start bluetooth? (y/n)" BLUETOOTH
 if [[ $BLUETOOTH =~ ^[Yy]$ ]]; then
-    printf " Installing Bluetooth Packages...\n"
- blue_pkgs="bluez bluez-utils blueman"
-    if ! yay -S --noconfirm $blue_pkgs 2>&1 | tee -a $LOG; then
-       	print_error "Failed to install bluetooth packages - please check the install.log"
     printf " Activating Bluetooth Services...\n"
     sudo systemctl enable --now bluetooth.service
     sleep 2
-    fi
-else
-    printf "${YELLOW} No bluetooth packages installed..\n"
-	fi
+fi
 
 ### Script is done ###
 printf "\n${GREEN} Installation Completed.\n"

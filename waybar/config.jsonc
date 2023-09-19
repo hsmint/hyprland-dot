@@ -6,26 +6,9 @@
   "margin-bottom": 0,
   "margin-left": 0,
   "margin-right": 0,
-  "modules-left": [
-    "custom/launcher",
-    "hyprland/workspaces",
-    "custom/playerctl",
-    "custom/playerlabel"
-  ],
-  "modules-center": [
-    "cpu",
-    "memory",
-    "disk"
-  ],
-  "modules-right": [
-    "tray",
-    "network",
-    "bluetooth",
-    "temperature",
-    "battery",
-    "pulseaudio",
-    "clock"
-  ],
+  "modules-left": ["custom/launcher", "hyprland/workspaces", "custom/playerctl", "custom/playerlabel"],
+  "modules-center": ["cpu", "memory", "disk"],
+  "modules-right": ["tray", "network", "bluetooth", "temperature", "battery", "pulseaudio", "clock"],
 
   // Modules configuration
   "clock": {
@@ -89,13 +72,7 @@
     "format-charging": "{capacity}% ",
     "format-plugged": "{capacity}% ",
     "format-alt": "{icon} {time}",
-    "format-icons": [
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
+    "format-icons": ["", "", "", "", ""]
   },
 
   "bluetooth": {
@@ -151,22 +128,16 @@
   "backlight": {
     "device": "intel_backlight",
     "format": "{icon} {percent}%",
-    "format-icons": ["󰃞", "󰃟", "󰃠"],
-    "on-scroll-up": "brightnessctl set 1%+",
-    "on-scroll-down": "brightnessctl set 1%-",
-    "min-length": 6
+    "format-icons": ["󰃞", "󰃟", "󰃠"]
+    // "on-scroll-up": "brightnessctl set 1%+",
+    // "on-scroll-down": "brightnessctl set 1%-",
+    // "min-length": 6
   },
 
   "pulseaudio": {
     "format": "{icon} {volume}%",
     "format-muted": "󰝟",
-    "format-icons": {
-      "default": [
-        "󰕿",
-        "󰖀",
-        "󰕾"
-      ]
-    },
+    "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
     "on-click": "pamixer -t",
     "on-scroll-up": "pamixer -i 5",
     "on-scroll-down": "pamixer -d 5",

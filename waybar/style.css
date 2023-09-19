@@ -1,7 +1,7 @@
 * {
     border: none;
     border-radius: 0px;
-    font-family: FontAwesome, Noto Sans CJK;
+    font-family: Iosevka, FontAwesome, Noto Sans CJK;
     font-size: 14px;
     font-style: normal;
     min-height: 0;
@@ -10,7 +10,7 @@
 window#waybar {
     background: rgba(30, 30, 46, 0.5);
     border-bottom: 1px solid #282828;
-    color: #f4d9e1
+    color: #f4d9e1;
 }
 
 #workspaces {
@@ -28,13 +28,11 @@ window#waybar {
     border-radius: 16px;
     color: #928374;
 }
-
 #workspaces button.active {
     color: #f4d9e1;
     background-color: transparent;
     border-radius: 16px;
 }
-
 #workspaces button:hover {
     background-color: #E6B9C6;
     color: black;
@@ -77,7 +75,6 @@ window#waybar {
     margin: 5px 5px 5px 5px;
     border-radius: 16px;
     padding: 0px 5px;
-    /*border-right: solid 1px #282738;*/
 }
 
 #clock {
@@ -91,13 +88,11 @@ window#waybar {
     margin-top: 0px;
     margin-bottom: 0px;
     font-weight: bold;
-    /*border-left: solid 1px #282738;*/
 }
 
 #temperature {
     border-radius: 10px 0px 0px 10px;
 }
-
 #temperature.critical {
     color: #eba0ac;
 }
@@ -129,18 +124,11 @@ window#waybar {
     border-radius: 8px;
     margin-left: 0px;
 }
-
 #pulseaudio.muted {
     background: transparent;
     color: #928374;
     border-radius: 8px;
     margin-left: 0px;
-}
-
-#custom-randwall {
-    color: #f4d9e1;
-    border-radius: 8px;
-    margin-right: 0px;
 }
 
 #custom-launcher {
@@ -149,10 +137,8 @@ window#waybar {
     border-radius: 0px 24px 0px 0px;
     margin: 0px 0px 0px 0px;
     padding: 0 20px 0 13px;
-    /*border-right: solid 1px #282738;*/
     font-size: 20px;
 }
-
 #custom-launcher button:hover {
     background-color: #FB4934;
     color: transparent;
@@ -166,8 +152,6 @@ window#waybar {
     padding-left: 15px;
     padding-right: 14px;
     border-radius: 16px;
-    /*border-left: solid 1px #282738;*/
-    /*border-right: solid 1px #282738;*/
     margin-top: 5px;
     margin-bottom: 5px;
     margin-left: 0px;
@@ -206,7 +190,6 @@ window#waybar {
 
 #cpu {
     background-color: #282828;
-    /*color: #FABD2D;*/
     border-radius: 16px;
     margin: 5px;
     margin-left: 5px;
@@ -217,7 +200,6 @@ window#waybar {
 
 #memory {
     background-color: #282828;
-    /*color: #83A598;*/
     border-radius: 16px;
     margin: 5px;
     margin-left: 5px;
@@ -228,7 +210,6 @@ window#waybar {
 
 #disk {
     background-color: #282828;
-    /*color: #8EC07C;*/
     border-radius: 16px;
     margin: 5px;
     margin-left: 5px;

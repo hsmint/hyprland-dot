@@ -1,2 +1,3 @@
 # hyprland-dot
-My own hyprland dotfiles
+Inspired by
+* [linux-mobile](https://)
