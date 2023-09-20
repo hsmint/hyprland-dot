@@ -65,85 +65,66 @@ if [[ $inst =~ ^[Nn]$ ]]; then
 fi
 
 if [[ $inst =~ ^[Yy]$ ]]; then
-    hypr_pkgs="hyprland-git wl-clipboard wf-recorder rofi wlogout swaylock-effects dunst swaybg kitty waybar-hyprland-git"
-    font_pkgs="ttf-jetbrains-mono-nerd ttf-icomoon-feather noto-fonts-emoji ttf-font-awesome"
-    audio_pkgs="pulseaudio pulseaudio-alsa pamixer playerctl"
-    app_pkgs="nwg-look qt5ct ffmpegthumbs btop mousepad python-requests"
-    bluetooth_pkgs="bluez bluez-utils"
-    laptop_pkgs="brightnessctl"
-    file_managers_pkgs="thunar lxappearance xfce4-settings xdg-desktop-portal-hyprland"
-    theme_pkgs="rofi-emoji dracula-gtk-theme dracula-icons-git nordic-theme papirus-icon-theme starship"
+    hypr_pkgs=""
+    font_pkgs=""
+    audio_pkgs=""
+    app_pkgs=""
+    bluetooth_pkgs=""
+    laptop_pkgs=""
+    file_managers_pkgs=""
+    theme_pkgs=""
 
-    read -n1 -rep "${CAT} Would you like to install hyperland packages(Necessary)? (y/n)" hypr
+    read -n1 -rep "${CAT} Would you like to install hyprland packages(Necessary)? (y/n)" hypr
     echo
-    if [[ $hypr =~ ^[Nn]$ ]]; then
-        if ! yay -S --noconfirm $hypr_pkgs  2>&1 | tee -a $LOG; then
-            print_error " Failed to install additional packages - please check the install.log \n"
-            exit 1
-        fi
+    if [[ $hypr =~ ^[Yy]$ ]]; then
+        hypr_pkgs="hyprland-git kitty waybar-git swaybg wl-clipboard wf-recorder rofi wlogout swaylock-effects dunst python-requests"
     fi
 
     read -n1 -rep "${CAT} Would you like to install font packages? (y/n)" fonts
     echo
-    if [[ $fonts =~ ^[Nn]$ ]]; then
-        if ! yay -S --noconfirm $font_pkgs  2>&1 | tee -a $LOG; then
-            print_error " Failed to install additional packages - please check the install.log \n"
-            exit 1
-        fi
+    if [[ $fonts =~ ^[Yy]$ ]]; then
+        font_pkgs="ttf-jetbrains-mono-nerd ttf-font-awesome ttf-icomoon-feather noto-fonts-emoji"
     fi
 
     read -n1 -rep "${CAT} Would you like to install audio packages? (y/n)" audio
     echo
-    if [[ $audio =~ ^[Nn]$ ]]; then
-        if ! yay -S --noconfirm $audio_pkgs  2>&1 | tee -a $LOG; then
-            print_error " Failed to install additional packages - please check the install.log \n"
-            exit 1
-        fi
+    if [[ $audio =~ ^[Yy]$ ]]; then
+        audio_pkgs="pulseaudio pulseaudio-alsa pamixer playerctl"
     fi
 
     read -n1 -rep "${CAT} Would you like to install app packages? (y/n)" app
     echo
-    if [[ $app =~ ^[Nn]$ ]]; then
-        if ! yay -S --noconfirm $app_pkgs  2>&1 | tee -a $LOG; then
-            print_error " Failed to install additional packages - please check the install.log \n"
-            exit 1
-        fi
+    if [[ $app =~ ^[Yy]$ ]]; then
+        app_pkgs="neofetch"
     fi
 
     read -n1 -rep "${CAT} Would you like to install bluetooth packages? (y/n)" bluetooth
     echo
-    if [[ $bluetooth =~ ^[Nn]$ ]]; then
-        if ! yay -S --noconfirm $bluetooth_pkgs  2>&1 | tee -a $LOG; then
-            print_error " Failed to install additional packages - please check the install.log \n"
-            exit 1
-        fi
+    if [[ $bluetooth =~ ^[Yy]$ ]]; then
+        bluetooth_pkgs="bluez bluez-utils"
     fi
 
     read -n1 -rep "${CAT} Would you like to install laptop packages? (y/n)" laptop
     echo
-    if [[ $laptop =~ ^[Nn]$ ]]; then
-        if ! yay -S --noconfirm $laptop_pkgs  2>&1 | tee -a $LOG; then
-            print_error " Failed to install additional packages - please check the install.log \n"
-            exit 1
-        fi
+    if [[ $laptop =~ ^[Yy]$ ]]; then
+        laptop_pkgs="brightnessctl"
     fi
 
-    read -n1 -rep "${CAT} Would you like to install laptop packages? (y/n)" file_manager
+    read -n1 -rep "${CAT} Would you like to install file manager packages? (y/n)" file_manager
     echo
-    if [[ $file_manager =~ ^[Nn]$ ]]; then
-        if ! yay -S --noconfirm $file_managers_pkgs  2>&1 | tee -a $LOG; then
-            print_error " Failed to install additional packages - please check the install.log \n"
-            exit 1
-        fi
+    if [[ $file_manager =~ ^[Yy]$ ]]; then
+        file_managers_pkgs="thunar thunar-archive-plugin nwg-look"
     fi
 
     read -n1 -rep "${CAT} Would you like to install theme packages? (y/n)" theme
     echo
-    if [[ $theme =~ ^[Nn]$ ]]; then
-        if ! yay -S --noconfirm $theme_pkgs  2>&1 | tee -a $LOG; then
-            print_error " Failed to install additional packages - please check the install.log \n"
-            exit 1
-        fi
+    if [[ $theme =~ ^[Yy]$ ]]; then
+        theme_pkgs="rofi-emoji dracula-gtk-theme dracula-icons-git nordic-theme papirus-icon-theme starship"
+    fi
+
+    if ! yay -S --noconfirm $hypr_pkgs $font_pkgs $audio_pkgs $app_pkgs $bluetooth_pkgs $laptop_pkgs $file_managers_pkgs $theme_pkgs 2>&1 | tee -a $LOG; then
+        print_error " Failed to install additional packages - please check the install.log \n"
+        exit 1
     fi
 
     echo
@@ -153,6 +134,14 @@ else
     print_error " Packages not installed - please check the install.log"
     sleep 1
 fi
+
+## ADD SOME FONTS
+mkdir -p $HOME/Downloads/nerdfonts/
+cd $HOME/Downloads/
+wget https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.1/CascadiaCode.zip
+unzip '*.zip' -d $HOME/Downloads/nerdfonts/
+rm -rf *.zip
+sudo cp -R $HOME/Downloads/nerdfonts/ /usr/share/fonts/
 
 # BLUETOOTH
 read -n1 -rep "${CAT} OPTIONAL - Would you like to start bluetooth? (y/n)" BLUETOOTH
