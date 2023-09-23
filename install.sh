@@ -65,62 +65,14 @@ if [[ $inst =~ ^[Nn]$ ]]; then
 fi
 
 if [[ $inst =~ ^[Yy]$ ]]; then
-    hypr_pkgs=""
-    font_pkgs=""
-    audio_pkgs=""
-    app_pkgs=""
-    bluetooth_pkgs=""
-    laptop_pkgs=""
-    file_managers_pkgs=""
-    theme_pkgs=""
-
-    read -n1 -rep "${CAT} Would you like to install hyprland packages(Necessary)? (y/n)" hypr
-    echo
-    if [[ $hypr =~ ^[Yy]$ ]]; then
-        hypr_pkgs="hyprland-git kitty waybar-git swaybg wl-clipboard wf-recorder rofi wlogout swaylock-effects dunst python-requests"
-    fi
-
-    read -n1 -rep "${CAT} Would you like to install font packages? (y/n)" fonts
-    echo
-    if [[ $fonts =~ ^[Yy]$ ]]; then
-        font_pkgs="ttf-jetbrains-mono-nerd ttf-font-awesome ttf-icomoon-feather noto-fonts-emoji"
-    fi
-
-    read -n1 -rep "${CAT} Would you like to install audio packages? (y/n)" audio
-    echo
-    if [[ $audio =~ ^[Yy]$ ]]; then
-        audio_pkgs="pulseaudio pulseaudio-alsa pamixer playerctl"
-    fi
-
-    read -n1 -rep "${CAT} Would you like to install app packages? (y/n)" app
-    echo
-    if [[ $app =~ ^[Yy]$ ]]; then
-        app_pkgs="neofetch"
-    fi
-
-    read -n1 -rep "${CAT} Would you like to install bluetooth packages? (y/n)" bluetooth
-    echo
-    if [[ $bluetooth =~ ^[Yy]$ ]]; then
-        bluetooth_pkgs="bluez bluez-utils"
-    fi
-
-    read -n1 -rep "${CAT} Would you like to install laptop packages? (y/n)" laptop
-    echo
-    if [[ $laptop =~ ^[Yy]$ ]]; then
-        laptop_pkgs="brightnessctl"
-    fi
-
-    read -n1 -rep "${CAT} Would you like to install file manager packages? (y/n)" file_manager
-    echo
-    if [[ $file_manager =~ ^[Yy]$ ]]; then
-        file_managers_pkgs="thunar thunar-archive-plugin nwg-look"
-    fi
-
-    read -n1 -rep "${CAT} Would you like to install theme packages? (y/n)" theme
-    echo
-    if [[ $theme =~ ^[Yy]$ ]]; then
-        theme_pkgs="rofi-emoji dracula-gtk-theme dracula-icons-git nordic-theme papirus-icon-theme starship"
-    fi
+    hypr_pkgs="hyprland-git kitty waybar-git swaybg wl-clipboard wf-recorder rofi wlogout swaylock-effects dunst python-requests cliphists polkit-kde-agent xdg-desktop-portal-hyprland-git qt5-wayland qt6-wayland"
+    font_pkgs="ttf-jetbrains-mono-nerd ttf-font-awesome ttf-icomoon-feather noto-fonts-emoji"
+    audio_pkgs="pulseaudio pulseaudio-alsa pamixer playerctl pavucontrol"
+    app_pkgs="neofetch firefox viewnior code code-features code-marketplace"
+    bluetooth_pkgs="bluez bluez-utils"
+    laptop_pkgs="brightnessctl"
+    file_managers_pkgs="thunar thunar-archive-plugin nwg-look"
+    theme_pkgs="rofi-emoji dracula-gtk-theme dracula-icons-git nordic-theme papirus-icon-theme starship"
 
     if ! yay -S --noconfirm $hypr_pkgs $font_pkgs $audio_pkgs $app_pkgs $bluetooth_pkgs $laptop_pkgs $file_managers_pkgs $theme_pkgs 2>&1 | tee -a $LOG; then
         print_error " Failed to install additional packages - please check the install.log \n"
@@ -149,6 +101,23 @@ if [[ $BLUETOOTH =~ ^[Yy]$ ]]; then
     printf " Activating Bluetooth Services...\n"
     sudo systemctl enable --now bluetooth.service
     sleep 2
+fi
+
+### Copy Config Files ###
+read -n1 -rep 'Would you like to copy config files? (y,n)' CFG
+if [[ $CFG == "Y" || $CFG == "y" ]]; then
+    echo -e "Copying config files...\n"
+    cp -R hypr ~/.config/
+    cp -R kitty ~/.config/
+    cp -R waybar ~/.config/
+    cp -R swaylock ~/.config/
+    cp -R rofi ~/.config/
+    cp -R dunst ~/.config/
+    cp -R wlogout ~/.config/
+    cp -R starship ~/.config/
+
+    # Set some files as exacutable
+    chmod +x ~/.config/waybar/scripts/waybar-wttr.py
 fi
 
 ### Script is done ###

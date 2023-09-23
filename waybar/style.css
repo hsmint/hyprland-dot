@@ -1,9 +1,9 @@
 * {
     border: none;
     border-radius: 0px;
-    font-family: Iosevka, FontAwesome, Noto Sans CJK;
+    font-family: "JetBrainsMono Nerd Font";
     font-size: 14px;
-    font-style: normal;
+    font-style: bold;
     min-height: 0;
 }
 
@@ -104,9 +104,10 @@ window#waybar {
     color: #9ece6a;
 }
 #battery.warning:not(.charging) {
-    background-color: #f7768e;
-    color: #24283b;
-    border-radius: 5px 5px 5px 5px;
+    color: #ff9d00;
+}
+#battery.critical:not(.charging) {
+    color: #eba0ac;
 }
 
 #backlight {
