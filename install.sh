@@ -65,6 +65,11 @@ if [[ $inst =~ ^[Nn]$ ]]; then
 fi
 
 if [[ $inst =~ ^[Yy]$ ]]; then
+    if ! yay -S --noconfirm sdbus-cpp 2>&1 | tee -a $LOG; then
+        print_error " Failed to install additional packages - please check the install.log \n"
+        exit 1
+    fi
+
     hypr_pkgs="hyprland-git kitty waybar-git swaybg wl-clipboard wf-recorder rofi wlogout swaylock-effects dunst python-requests cliphists polkit-kde-agent xdg-desktop-portal-hyprland-git qt5-wayland qt6-wayland"
     font_pkgs="ttf-jetbrains-mono-nerd ttf-font-awesome ttf-icomoon-feather noto-fonts-emoji"
     audio_pkgs="pulseaudio pulseaudio-alsa pamixer playerctl pavucontrol"
@@ -87,6 +92,11 @@ else
     sleep 1
 fi
 
+if ! yay -S --noconfirm wget unzip 2>&1 | tee -a $LOG; then
+    print_error " Failed to install additional packages - please check the install.log \n"
+    exit 1
+fi
+
 ## ADD SOME FONTS
 mkdir -p $HOME/Downloads/nerdfonts/
 cd $HOME/Downloads/
@@ -107,14 +117,14 @@ fi
 read -n1 -rep 'Would you like to copy config files? (y,n)' CFG
 if [[ $CFG == "Y" || $CFG == "y" ]]; then
     echo -e "Copying config files...\n"
-    cp -R hypr ~/.config/
-    cp -R kitty ~/.config/
-    cp -R waybar ~/.config/
-    cp -R swaylock ~/.config/
-    cp -R rofi ~/.config/
-    cp -R dunst ~/.config/
-    cp -R wlogout ~/.config/
-    cp -R starship ~/.config/
+    cp -R $PWD/hypr ~/.config/
+    cp -R $PWD/kitty ~/.config/
+    cp -R $PWD/waybar ~/.config/
+    cp -R $PWD/swaylock ~/.config/
+    cp -R $PWD/rofi ~/.config/
+    cp -R $PWD/dunst ~/.config/
+    cp -R $PWD/wlogout ~/.config/
+    cp -R $PWD/starship ~/.config/
 
     # Set some files as exacutable
     chmod +x ~/.config/waybar/scripts/waybar-wttr.py
