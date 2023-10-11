@@ -117,14 +117,14 @@ fi
 read -n1 -rep 'Would you like to copy config files? (y,n)' CFG
 if [[ $CFG == "Y" || $CFG == "y" ]]; then
     echo -e "Copying config files...\n"
-    cp -R $PWD/hypr ~/.config/
-    cp -R $PWD/kitty ~/.config/
-    cp -R $PWD/waybar ~/.config/
-    cp -R $PWD/swaylock ~/.config/
-    cp -R $PWD/rofi ~/.config/
-    cp -R $PWD/dunst ~/.config/
-    cp -R $PWD/wlogout ~/.config/
-    cp -R $PWD/starship ~/.config/
+    cp -R ./hypr ~/.config/hypr
+    cp -R ./kitty ~/.config/kitty
+    cp -R ./waybar ~/.config/waybar
+    cp -R ./swaylock ~/.config/swaylock
+    cp -R ./rofi ~/.config/rofi
+    cp -R ./dunst ~/.config/dunst
+    cp -R ./wlogout ~/.config/wlogout
+    cp -R ./starship ~/.config/starship
 
     # Set some files as exacutable
     chmod +x ~/.config/waybar/scripts/waybar-wttr.py
